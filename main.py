@@ -88,6 +88,19 @@ async def get_payloads():
     conn.close()
     
     return {"payloads": payloads}
+    
+@app.delete("/payloads")
+async def delete_payloads():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    cur.execute("DELETE FROM payloads")
+    conn.commit()
+    
+    cur.close()
+    conn.close()
+    
+    return {"status": "success", "message": "All payloads deleted"}
 
 if __name__ == "__main__":
     import uvicorn
